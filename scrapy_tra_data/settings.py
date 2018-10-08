@@ -19,7 +19,8 @@ NEWSPIDER_MODULE = 'scrapy_tra_data.spiders'
 #USER_AGENT = 'scrapy_tra_data (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+# ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -88,3 +89,31 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+#Splash服務器地址
+SPLASH_URL = 'http://192.168.99.100:8050/'
+#開啟兩個下載中間件，並調整HttpCompressionMiddlewares的次序                                               
+DOWNLOADER_MIDDLEWARES = {
+    #'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy_splash.SplashCookiesMiddleware': 723,
+    'scrapy_splash.SplashMiddleware':725,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware':810,                         
+}
+#用來支持cache_args（可選）
+SPIDER_MIDDLEWARES = {
+    'scrapy_splash.SplashDeduplicateArgsMiddleware':100,
+}
+#設置去重過濾器 
+DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+# 使用Splash的Http缓存
+HTTPCACHE_STORAGE ='scrapy_splash.SplashAwareFSCacheStorage'
+
+# 請求標頭
+DEFAULT_REQUEST_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.89 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+}
+
+IMAGES_URLS_FIELD = 'url'
+IMAGES_STORE = r'traveCityImage'
