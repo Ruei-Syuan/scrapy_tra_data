@@ -116,4 +116,5 @@ DEFAULT_REQUEST_HEADERS = {
 }
 
 IMAGES_URLS_FIELD = 'url'
-IMAGES_STORE = r'traveCityImage'
+IMAGES_STORE = r'travel'
+# IMAGES_STORE = r'traveCityImage'
